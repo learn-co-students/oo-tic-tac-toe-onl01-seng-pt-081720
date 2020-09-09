@@ -13,8 +13,56 @@ class TicTacToe
         puts " #{@board[6]} | #{@board[7]} | #{@board[8]} "
     end
 
-    def input_to_index
-        name = STDIN.gets.chomp
-        binding.pry
+    def input_to_index(user_input)
+        user_input_integer = (user_input).to_i
+        friendly_format_input = user_input_integer - 1
+        friendly_format_input
+    end
+
+    def move(index, token = "x")
+        @board[index] = token
+    end
+
+    def position_taken?(index)
+        if @board[index] == "X" || @board[index] == "O"
+            true
+        else 
+            false
+        end
+    end
+
+    def valid_move?(position)
+        if position_taken?(position) || !(position.between?(0,8))
+            false
+        else
+            true
+        end 
+         
+    end
+
+    def turn
+        puts "Do your move between the number 1 and 9"
+        input_to_index
+        # if valid_move?(input_to_index(user_input))
+        #     move(index, token = "x")
+        #     display_board
+        # else
+        #     puts "Do your move between the number 1 and 9"
+        # end
+
+
+    end
+
+    def turn_count
+        number = 9 - @board.count(" ")
+        number
+    end
+
+    def current_player
+        if turn_count.odd?
+            return "O"
+        else
+            return "X"
+        end
     end
 end
