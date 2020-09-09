@@ -44,11 +44,7 @@ class TicTacToe
     end
 
     def valid_move?(n) #n = index #s NOT user input
-        if n != 0..8 || @board[n] == "X" || @board[n] == "O"  #if move is not valid (b/c already occupied) should return false or nil
-            false
-        else
-            true
-        end 
+        n.between?(0,8) && !position_taken?(n)
     end
 
     def turn_count
@@ -116,7 +112,3 @@ end
 # 0 1 2
 # 3 4 5
 # 6 7 8
-
-# def current_player
-#     turn_count % 2 == 0 ? "X" : "O"
-#   end
