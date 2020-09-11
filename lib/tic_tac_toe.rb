@@ -19,7 +19,7 @@ class TicTacToe
         friendly_format_input
     end
 
-    def move(index, token = "x")
+    def move(index, token = "X")
         @board[index] = token
     end
 
@@ -42,14 +42,15 @@ class TicTacToe
 
     def turn
         puts "Do your move between the number 1 and 9"
-        input_to_index
-        # if valid_move?(input_to_index(user_input))
-        #     move(index, token = "x")
-        #     display_board
-        # else
-        #     puts "Do your move between the number 1 and 9"
-        # end
-
+        input = gets.chomp
+        index = input_to_index(input)
+        player = current_player
+        if valid_move?(index)
+            move(index, player)
+            display_board
+        else
+            turn
+        end
 
     end
 
@@ -65,4 +66,62 @@ class TicTacToe
             return "X"
         end
     end
+
+    def won?
+        WIN_COMBINATIONS.detect do |winner|
+            if (@board[winner[0]] == "X" && @board[winner[1]] == "X" && @board[winner[2]] == "X")
+                return winner
+            elsif (@board[winner[0]] == "O" && @board[winner[1]] == "O" && @board[winner[2]] == "O")
+                return winner
+            end
+        end
+    end
+
+    def full? 
+      if @board.include?(" ")
+            false
+      else 
+        return true
+      end
+    end
+
+    def draw?
+        if (full? == true && won? == (false || nil))
+            true
+        else 
+            false
+        end
+    end
+
+    def over?
+        if (draw? == true || full? == true || won? == true)
+            true
+        else 
+            false
+        end
+    end
+
+    def winner 
+        WIN_COMBINATIONS.detect do |winner|
+            if (@board[winner[0]] == "X" && @board[winner[1]] == "X" && @board[winner[2]] == "X")
+                return "X"
+            elsif (@board[winner[0]] == "O" && @board[winner[1]] == "O" && @board[winner[2]] == "O")
+                return "O"
+            else
+                nil
+            end
+        end
+    end
+
+    def play
+        while (!over?)
+            turn
+        end
+        if (won?)
+            puts "Congratulations #{winner}"
+        elsif (draw?)
+            puts "It ended in a draw!"
+        end
+    end
+
 end
