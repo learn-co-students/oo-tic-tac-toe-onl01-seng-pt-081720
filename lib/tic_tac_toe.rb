@@ -1,4 +1,6 @@
-require 'pry'
+
+
+
 class TicTacToe
         WIN_COMBINATIONS = [[0,1,2,],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
     def initialize
@@ -32,11 +34,7 @@ class TicTacToe
     end
 
     def valid_move?(position)
-        if position_taken?(position) || !(position.between?(0,8))
-            false
-        else
-            true
-        end 
+        !position_taken?(position) && (position.between?(0,8))
          
     end
 
@@ -55,8 +53,9 @@ class TicTacToe
     end
 
     def turn_count
-        number = 9 - @board.count(" ")
-        number
+        # number = 9 - @board.count(" ")
+        # number
+        @board.count{|x| x != " "}
     end
 
     def current_player
@@ -69,11 +68,14 @@ class TicTacToe
 
     def won?
         WIN_COMBINATIONS.detect do |winner|
-            if (@board[winner[0]] == "X" && @board[winner[1]] == "X" && @board[winner[2]] == "X")
-                return winner
-            elsif (@board[winner[0]] == "O" && @board[winner[1]] == "O" && @board[winner[2]] == "O")
-                return winner
-            end
+            @board[winner[0]] == @board[winner[1]] &&
+            @board[winner[1]] == @board[winner[2]] &&
+            position_taken?(winner[0])
+            # if (@board[winner[0]] == "X" && @board[winner[1]] == "X" && @board[winner[2]] == "X")
+            #     return winner
+            # elsif (@board[winner[0]] == "O" && @board[winner[1]] == "O" && @board[winner[2]] == "O")
+            #     return winner
+            # end
         end
     end
 
@@ -86,19 +88,21 @@ class TicTacToe
     end
 
     def draw?
-        if (full? == true && won? == (false || nil))
-            true
-        else 
-            false
-        end
+        full? && !won?
+        # if (full? == true && won? == (false || nil))
+        #     true
+        # else 
+        #     false
+        # end
     end
 
     def over?
-        if (draw? == true || full? == true || won? == true)
-            true
-        else 
-            false
-        end
+        draw? || won?
+        # if (draw? == true || full? == true || won? == true)
+        #     true
+        # else 
+        #     false
+        # end
     end
 
     def winner 
@@ -118,10 +122,13 @@ class TicTacToe
             turn
         end
         if (won?)
-            puts "Congratulations #{winner}"
+            puts "Congratulations #{winner}!"
         elsif (draw?)
-            puts "It ended in a draw!"
+            puts "Cat's Game!"
         end
     end
 
 end
+
+# game = TicTacToe.new
+# game.play
