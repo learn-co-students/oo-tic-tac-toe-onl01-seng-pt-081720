@@ -1,7 +1,3 @@
-class TicTacToe
-def initalize 
-@board = Array.new(9, " ")
-end 
-end 
-newgame = TicTacToe.new 
-newgame.play
+require_relative '../lib/tic_tac_toe.rb' 
+new_game = TicTacToe.new 
+new_game.play 

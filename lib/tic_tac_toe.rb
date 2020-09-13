@@ -1,4 +1,3 @@
-
 class TicTacToe
 
 def initialize 
@@ -114,5 +113,4 @@ end
 end 
 end 
 
-new_game = TicTacToe.new 
-new_game.play 
+
